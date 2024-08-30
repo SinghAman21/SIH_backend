@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+      }
+
+      .gallery {
+        max-width: 1000px;
+        margin: 2rem auto;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        overflow-x: auto;
+      }
+
+      .gallery-panel {
+        font-family: "Playfair Display", serif;
+        flex: 1 1 200px;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        cursor: pointer;
+        transition: flex 0.5s ease-in-out;
+        background: #ffffff;
+        padding: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        height: 450px;
+        position: relative;
+        border: 2px solid #ddd;
+        border-color: #007bff; /* Add a border color */
+        overflow-y: scroll; /* or 'auto' */
+        scrollbar-width: none; /* Firefox */
+      }
+
+      .gallery-panel:hover {
+        flex: 1 1 400px;
+        border-color: #0056b3; /* Darker border color on hover */
+      }
+
+      .cover-page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #007bff; /* Cover page background color */
+        color: #ffffff; /* Cover page text color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transition: opacity 0.5s ease;
+        opacity: 1;
+        z-index: 1;
+        padding: 1rem;
+        pointer-events: none; /* Prevents interaction when input is needed */
+      }
+
+      .gallery-panel:hover .cover-page {
+        opacity: 0;
+        pointer-events: none; /* Ensures input fields are accessible */
+      }
+
+      .form-content {
+        position: relative;
+        z-index: 0;
+        height: 100%;
+        padding: 1rem;
+      }
+
+      .form-content form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .form-content label {
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        color: #333;
+      }
+
+      .form-content select,
+      .form-content textarea {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 0.25rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .form-content select:focus,
+      .form-content textarea:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      .form-content textarea {
+        resize: vertical;
+      }
+
+      .form-content h2 {
+        margin-bottom: 0.5rem;
+        color: #007bff;
+        font-size: 1.5rem;
+      }
+
+      /* From Uiverse.io by JkHuger */
+      .rainbow-hover {
+        font-size: 16px;
+        font-weight: 700;
+        color: #ff7576;
+        background-color: #ffffff;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 12px 24px;
+        position: relative;
+        line-height: 24px;
+        border-radius: 9px;
+        box-shadow: 0px 1px 2px #0404e4;
+        transform-style: preserve-3d;
+        transform: scale(var(--s, 1)) perspective(600px)
+          rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+        perspective: 600px;
+        transition: transform 0.1s;
+      }
+
+      .sp {
+        background: linear-gradient(
+          90deg,
+          #4a90e2,
+          /* Light Blue */ #3a78d4,
+          /* Medium Light Blue */ #346bb2,
+          /* Medium Blue */ #2c569e,
+          /* Medium Dark Blue */ #23447c
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        /* text-fill-color: transparent; */
+        display: block;
+      }
+
+      .rainbow-hover:active {
+        transition: 0.3s;
+        transform: scale(0.93);
+      }
+
+      /* From Uiverse.io by mrhyddenn */
+      .form__group {
+        position: relative;
+        padding: 20px 0 0;
+        width: 100%;
+        max-width: 180px;
+      }
+
+      .form__field {
+        font-family: inherit;
+        width: 100%;
+        border: none;
+        border-bottom: 2px solid #9b9b9b;
+        outline: 0;
+        font-size: 17px;
+        color: #333;
+        padding: 7px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+      }
+
+      .form__field::placeholder {
+        color: transparent;
+      }
+
+      .form__field:placeholder-shown ~ .form__label {
+        font-size: 17px;
+        cursor: text;
+        top: 20px;
+      }
+
+      .form__label {
+        display: block;
+        transition: 0.2s;
+        font-size: 17px;
+        color: #9b9b9b;
+        pointer-events: none; /* Prevents interaction */
+      }
+
+      .form__field:focus {
+        position: relative;
+        top: 0.3rem;
+        padding-bottom: 6px;
+        font-weight: 700;
+        border-width: 3px;
+        border-image: linear-gradient(to right, #116399, #38caef);
+        border-image-slice: 1;
+      }
+
+      .form__field:focus ~ .form__label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 17px;
+        color: #38caef;
+        font-weight: 700;
+      }
+
+      /* reset input */
+      .form__field:required,
+      .form__field:invalid {
+        box-shadow: none;
+      }
+
+      /* From Uiverse.io by ClawHack1 */
+      /* Genel stil */
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 24px;
+        margin: 10px;
+      }
+
+      /* Giriş stil */
+      .toggle-switch .toggle-input {
+        display: none;
+      }
+
+      /* Anahtarın stilinin etrafındaki etiketin stil */
+      .toggle-switch .toggle-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 24px;
+        background-color: #2196f3;
+        border-radius: 34px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      /* Anahtarın yuvarlak kısmının stil */
+      .toggle-switch .toggle-label::before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        background-color: #fff;
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s;
+      }
+
+      /* Anahtarın etkin hale gelmesindeki stil değişiklikleri */
+      .toggle-switch .toggle-input:checked + .toggle-label {
+        background-color: #4caf50;
+      }
+
+      .toggle-switch .toggle-input:checked + .toggle-label::before {
+        transform: translateX(16px);
+      }
+
+      /* Light tema */
+      .toggle-switch.light .toggle-label {
+        background-color: #bebebe;
+      }
+
+      .toggle-switch.light .toggle-input:checked + .toggle-label {
+        background-color: #9b9b9b;
+      }
+
+      .toggle-switch.light .toggle-input:checked + .toggle-label::before {
+        transform: translateX(6px);
+      }
+
+      /* Dark tema */
+      .toggle-switch.dark .toggle-label {
+        background-color: #4b4b4b;
+      }
+
+      .toggle-switch.dark .toggle-input:checked + .toggle-label {
+        background-color: #717171;
+      }
+
+      .toggle-switch.dark .toggle-input:checked + .toggle-label::before {
+        transform: translateX(16px);
+      }
+
+      .toggle-container {
+        display: inline-block;
+      }
+
+      span.toggle-text {
+        position: relative;
+        top: -0.5rem;
+      }
+
+      .form__label {
+        position: absolute;
+        top: -2rem;
+      }
+
+      #date_of_birth {
+        height: 2rem;
+        border-radius: 25px;
+      }
+
+      input[type="date"] {
+        padding-left: 1rem; 
+        padding-right: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gallery">
+      <!-- Basic Information Panel -->
+      <div class="gallery-panel">
+        <div class="cover-page">
+          <div>
+            <h2>Basic Information</h2>
+            <p>
+              Enter your full name, gender, date of birth, contact details, and
+              current address.
+            </p>
+          </div>
+        </div>
+        <div class="form-content">
+          <form action="">
+            <h2>Basic Information</h2>
+            <div class="form__group field">
+              <input
+                type="input"
+                class="form__field"
+                placeholder="Full Name"
+                id="name"
+                name="fullName"
+                required
+              />
+              <label for="fullName" class="form__label">Full Name</label>
+            </div>
+    
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+    
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="date_of_birth" name="dob" required />
+    
+            <div class="form__group field">
+              <input
+                type="input"
+                class="form__field"
+                placeholder="Phone Number"
+                id="phone_number"
+                name="phone"
+                required
+              />
+              <label for="phone" class="form__label">Phone Number</label>
+            </div>
+    
+            <div class="form__group field">
+              <input
+                type="input"
+                class="form__field"
+                placeholder="Email Address"
+                id="email"
+                name="email"
+                required
+              />
+              <label for="email" class="form__label">Email Address</label>
+            </div>
+    
+            <label for="address">Current Address:</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+          </form>
+        </div>
+      </div>
+    
+      <!-- Educational Background Panel -->
+      <div class="gallery-panel">
+        <div class="cover-page">
+          <div>
+            <h2>Educational Background</h2>
+            <p>
+              Provide information about your institution, degrees earned, graduation
+              year, and major.
+            </p>
+          </div>
+        </div>
+        <div class="form-content">
+          <form action="">
+            <h2>Educational Background</h2>
+    
+            <div class="form__group field">
+              <label for="institution" class="form__label">Who are you?</label>
+    
+              <div class="toggle-container">
+                <span class="toggle-text">Student</span>
+                <div class="toggle-switch">
+                  <input class="toggle-input" id="toggle" type="checkbox" />
+                  <label class="toggle-label" for="toggle"></label>
+                </div>
+                <span class="toggle-text">Alumni</span>
+              </div>
+    
+              <div class="form__group field">
+                <input
+                  type="input"
+                  class="form__field"
+                  placeholder="Institution"
+                  id="institute_name"
+                  name="institution"
+                  required
+                />
+                <label for="institution" class="form__label" style="position: absolute;"
+                  >Institution</label
+                >
+              </div>
+    
+              <div class="form__group field">
+                <input
+                  type="input"
+                  class="form__field"
+                  placeholder="Degree"
+                  id="name_of_degree"
+                  name="degree"
+                  required
+                />
+                <label for="degree" class="form__label" style="position: absolute;"
+                  >Degree</label
+                >
+              </div>
+    
+              <div class="student" id="student">
+                <br />
+                <label for="year">Year:</label>
+                <select id="year" name="gender" required>
+                  <option value="fe">First Year</option>
+                  <option value="se">Second Year</option>
+                  <option value="te">Third Year</option>
+                  <option value="be">Fourth Year</option>
+                </select>
+              </div>
+    
+              <div class="alumini" id="alumni">
+                <div class="form__group field">
+                  <input
+                    type="input"
+                    class="form__field"
+                    placeholder="Graduation Year"
+                    id="graduation_year"
+                    name="gradYear"
+                    required
+                  />
+                  <label for="gradYear" class="form__label" style="position: absolute;"
+                    >Graduation Year</label
+                  >
+                </div>
+              </div>
+              <div class="form__group field">
+                <label for="major_field_of_study" class="form__label">Major:</label>
+                <select
+                  id="major_field_of_study"
+                  name="major"
+                  class="form__field"
+                  required
+                >
+                  <option value="cs_it">CS & IT</option>
+                  <option value="mechanical">Mechanical</option>
+                  <option value="electrical">Electrical</option>
+                  <option value="civil">Civil</option>
+                  <option value="other">Other</option>
+                </select>
+    
+                <div class="other_major_container" id="other_major_container" style="display: none;">
+                  <input
+                    type="text"
+                    id="major_field_of_study"
+                    name="other_major"
+                    class="form__field"
+                    placeholder="Enter your major"
+                  />
+                  <!-- <label for="other_major" class="form__label" style="position: absolute;">Other Major</label> -->
+                </div>
+              </div>
+              <br />
+
+              <div class="alumni" id="upload" style="display: none;">
+              <input type="file" id="fileInput" accept="pdf" />
+              <button onclick="uploadPDF()">Upload PDF</button>
+            </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    
+      <!-- Work Experience Panel -->
+      <div class="gallery-panel">
+        <div class="cover-page">
+          <div>
+            <h2>Work Experience</h2>
+            <p>
+              List your work experiences, including job titles, companies, employment
+              dates, and responsibilities.
+            </p>
+          </div>
+        </div>
+        <div class="form-content">
+          <form action="">
+            <h2>Work Experience</h2>
+            <div class="form__group field">
+              <input
+                type="input"
+                class="form__field"
+                placeholder="Job Title"
+                id="job_title"
+                name="jobTitle"
+                required
+              />
+              <label for="jobTitle" class="form__label">Job Title</label>
+            </div>
+    
+            <div class="form__group field">
+              <input
+                type="input"
+                class="form__field"
+                placeholder="Company"
+                id="current_employer"
+                name="company"
+                required
+              />
+              <label for="company" class="form__label">Company</label>
+            </div>
+    
+            <label for="responsibilities">Job Description:</label>
+            <textarea
+              id="job_description"
+              name="responsibilities"
+              rows="3"
+              required
+            ></textarea>
+          </form>
+        </div>
+      </div>
+    
+      <!-- Skills Panel -->
+      <div class="gallery-panel">
+        <div class="cover-page">
+          <div>
+            <h2>Skills</h2>
+            <p>
+              Outline your technical skills, software proficiencies, and other relevant
+              competencies.
+            </p>
+          </div>
+        </div>
+        <div class="form-content">
+          <form action="">
+            <h2>Skills</h2>
+            <div class="form__group field">
+              <input
+                type="input"
+                class="form__field"
+                placeholder="Technical Skills"
+                id="skills"
+                name="techSkills"
+                required
+              />
+              <label for="techSkills" class="form__label">Technical Skills</label>
+            </div>
+            <br />
+            <button data-label="Register" class="rainbow-hover">
+              <span class="sp">Register</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+        
+    <!-- <button data-label="Register" class="rainbow-hover">
+      <span class="sp">Register</span>
+    </button> -->
+  </body>
+  <script>
+    function toggleContent() {
+  const toggleInput = document.getElementById("toggle");
+  const studentDiv = document.getElementById("student");
+  const alumniDiv = document.getElementById("alumni");
+  const upload = document.getElementById("upload");
+
+  // Check if the toggle is checked
+  if (toggleInput.checked) {
+    // Show Alumni div and hide Student div
+    studentDiv.style.display = "none";
+    alumniDiv.style.display = "block";
+    upload.style.display = "block";
+  } else {
+    // Show Student div and hide Alumni div
+    studentDiv.style.display = "block";
+    alumniDiv.style.display = "none";
+    upload.style.display = "none"; 
+  }
+}
+
+// Add event listener to the toggle switch
+document.getElementById("toggle").addEventListener("change", toggleContent);
+
+// Initial check to set the correct div visibility
+toggleContent();
+
+document.addEventListener("DOMContentLoaded", function() {
+  const majorField = document.getElementById("major_field_of_study");
+  const otherMajorContainer = document.getElementById("other_major_container");
+
+  majorField.addEventListener("change", function() {
+    if (majorField.value === "other") {
+      otherMajorContainer.style.display = "block"; // Show the input field
+    } else {
+      otherMajorContainer.style.display = "none"; // Hide the input field
+    }
+  });
+});
+
+
+
+  function uploadPDF() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+
+    if (file && file.type === 'application/pdf') {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const base64String = e.target.result.split(',')[1]; // Extract base64 part
+            localStorage.setItem('uploadedPDF', base64String);
+            alert('PDF uploaded to local storage!');
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        alert('Please upload a valid PDF file.');
+    }
+}
+  </script>
+</html>

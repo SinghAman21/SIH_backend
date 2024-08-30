@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from typing import Optional
 #routers
 from .routers import items
 
@@ -18,6 +18,6 @@ app.add_middleware(
 trialDB=[]
 
 app.include_router(items.router)
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+@app.get("/home")
+async def home(limit=20,sort: Optional[str]=None):
+    return {"message": f"this is the home page, these many posts are seen {limit}"}

@@ -1,0 +1,191 @@
+html {
+    overflow-y: scroll;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Euclid Circular A", "Poppins";
+    color: white;
+    background: #6482AD;
+    text-align: center;
+  }
+  
+  html, body {
+    overflow-x: hidden;
+    margin: 0;
+  }
+
+  h1{
+    font-family: "New Amsterdam", sans-serif;
+    font-weight: bolder;
+    font-size: 5rem;
+    color:#021526
+  }
+
+  .container {
+    width: 300%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+  header {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 20px;
+    width: 100%;
+    height: 56px;
+    background: #021526;
+    color: antiquewhite;
+  }
+  
+  header > h1 {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    background: #7FA1C3;
+    color: #021526;
+    border-radius: 50%;
+  }
+
+header nav {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+    }
+      
+header a {
+        text-decoration: none;
+        font-weight: 500;
+        height: 72px;
+        color: inherit;
+        display: grid;
+        place-items: center;
+      }
+      
+header nav > a:hover {
+  color: rgb(255 255 255 / 96%);
+}
+
+  header span.material-symbols-outlined {
+    font-size: 26px;
+    width: 32px;
+  }
+  
+  .panel img{
+    width: 40%;
+    height: 100%;
+    mix-blend-mode: multiply;
+  }
+  
+  h2 {
+    margin: 50px 0 20px;
+    font-size: 2.5rem;
+  }
+  
+  p {
+    font-size: 26px;
+  }
+  
+  .panel {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 5px 80px;
+    width: 100vw; 
+    transition: box-shadow 3s ease;
+  }
+  
+  .container .panel {
+    flex-direction: row;
+    gap: 40px;
+    text-align: left;
+  }
+  
+  .container .panel img {
+    translate: 0 16px;
+  }
+  
+  .container h2 {
+    margin: 0 0 10px;
+  }
+  
+  .container p {
+    margin: 0;
+  }
+  
+  .container .panel:nth-child(odd) {
+    background: #7FA1C3;
+  }
+
+  .logo{
+    font-family: "Euclid Circular A", "Poppins";
+  }
+
+  .Home{
+    background: linear-gradient( #E2DAD6,#6482AD,#7FA1C3, #021526);
+    color: antiquewhite;
+    text-align: left;
+    opacity: 0.9;
+  }
+  .alumni{
+    float: right;
+    padding-top: 50px;
+  }
+  #Parallel{
+    float: left;
+    width: auto;
+  }
+  button{
+    height: 40px;
+    width: 35%;
+    font-size: 1.5rem;
+    border: 5px solid #021526;
+    color: #021526;
+    font-weight: bolder;
+  }
+  .team{
+    display: flex;
+    justify-content: space-between;
+  }
+  footer{
+    background-color: #021526;
+  }
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.hover {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 3);
+}
+.team img{
+  height: 200px;
+    width: 150px;
+    mix-blend-mode: normal;
+    margin: 50px;
+    margin-bottom: 20px;
+}
+a{
+  text-decoration: none;
+}

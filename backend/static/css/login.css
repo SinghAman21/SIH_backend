@@ -1,0 +1,170 @@
+*{
+    font-family: "Lato", serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+body{
+    height: 100vh;
+    background: linear-gradient(to bottom right, #7C93C3 50%, rgb(0, 123, 255) 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    width: 700px;
+    height: 400px;
+    background-color: beige;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    border-radius: 15px;
+}
+.login{
+    width: 60%;
+    height: 100%;
+    background-color: wheat;
+    border-radius: 15px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.sign{
+    width: 40%;
+    height: 100%;
+    background-color: white; 
+    border-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.Login h4{
+    position: relative;
+    top: 5rem;
+    left: 11rem;
+}
+input{
+    width: 15rem;
+    opacity: 0.6;
+    position: relative;
+    top: 4rem;
+    left: 5.5rem;
+    border-radius: 15px;
+}
+label{
+    font-size: smaller;
+    position: relative;
+    top: 5rem;
+    left: 6rem;
+    opacity: 0.8;
+}
+.fa-asterisk{
+    font-size: smaller;
+    color: rgb(172, 2, 2);
+    opacity: 0.8;
+}
+#fogpass{
+    font-size: smaller;
+    color: blue;
+    position: absolute;
+    top: 17.5rem;
+    left: 32rem;
+    opacity: 0.7;
+    transition: 0.3s ease-in-out 0.1s;
+}
+#logbtn{
+    width: 15rem;
+    position: relative;
+    top: 6rem;
+    left: 5.5rem;
+    border-radius: 15px;
+}
+#noacc{
+    font-size: small;
+    position: relative;
+    top: 10rem;
+    left: 8rem;
+    opacity: 0.8;
+}
+#noacc span{
+    font-size: larger;
+    color: blue;
+    transition: 0.3s ease-in-out 0.1s;
+}
+#fogpass:hover{
+    text-decoration: underline;
+}
+#noacc span:hover{
+    text-decoration: underline;
+}
+.slides{
+    height: 80%;
+    width: 100%;
+    position: relative;
+}
+.slide{
+    height: 100%;
+    position: absolute;
+}
+.slide img{
+    height: 60%;
+    width: 100%;
+    border-top-right-radius: 15px;
+}
+.slide h5{
+    font-weight: 900;
+    position: relative;
+    left: 1rem;
+    margin-bottom: 1rem;
+}
+.slide p{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#slide3 h4{
+    font-size: xx-large;
+    color: rgb(238, 181, 75);
+    /* text-shadow: 2px 2px 4px black; */
+    text-decoration: 2px solid black;
+    position: relative;
+    top: 1rem;
+    left: 2rem;
+}
+#signp{
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    top: 1rem;
+} 
+#signal{
+    position: relative;
+    top: 1rem;
+    font-weight: 700;
+}
+#slide3 button{
+    position: relative;
+    top: 1rem;
+    left: 10rem;
+}
+.btns{
+    height: 15%;
+    width: 100%;
+    position: relative;
+    top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btns div{
+    display: inline-block;
+    margin: 2px;
+    width: 80px;
+    height: 10px;
+    border-radius: 15px;
+    background-color: rgb(0, 123, 255);
+    color: transparent;
+}
+.hidden{
+    opacity: 0;
+}
+.btnhid{
+    opacity: 0.6;
+}
